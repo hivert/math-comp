@@ -76,13 +76,17 @@ We write
 - Operators are surrounded by space, for example `n*m` should be written `n * m`.
 This particular example can be problematic if matrix.v is imported because then, `M *m N` is matrix product.
 
-### Statement-macros
+### Statement-macros and helpers
 
 - There is a number of "macros" that are available to state lemmas, like `commutative`, `associative`,...
   (see [`ssrfun.v`](https://github.com/coq/coq/blob/master/theories/ssr/ssrfun.v))
 
 - There are also macros that are available to to localize a statement, like `{in A, P}`,...
   (see [`ssrbool.v`](https://github.com/coq/coq/blob/master/theories/ssr/ssrbool.v))
+
+- Don't use `Program Definition` e.g. to define mixins. There is a unstable tactic used at the beggining of 
+  each `Next Obligation` which introduces some variables in the context with an automatic name, independently 
+  of the variables before the: in the statement. This makes maintainance harder.
 
 ### Naming of variables
 - Variable/hypohteses names follow the following conventions.
