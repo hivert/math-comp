@@ -2856,6 +2856,20 @@ move: s_x; rewrite inE; have [-> // | _] := eqVneq; apply: IHs.
 by apply: sub_in2 inj_f => z; apply: predU1r.
 Qed.
 
+Lemma uniq_map_indexE s :
+  uniq (map f s) -> forall x, x \in s -> index (f x) (map f s) = index x s.
+Proof.
+move=> f_uniq x /[dup] xins /map_f fxinfs; apply/eqP.
+rewrite -(nth_uniq (f x) _ _ f_uniq) ?index_mem ?size_map ?index_mem //.
+by rewrite nth_index // (nth_map x) ?index_mem // nth_index.
+Qed.
+
+Lemma uniq_map_in_inj s : uniq (map f s) -> {in s &, injective f}.
+Proof.
+move=> Huniq x y xin yin eqfxy; apply: (index_inj x xin yin).
+by rewrite -!(uniq_map_indexE Huniq) ?eqfxy.
+Qed.
+
 Lemma perm_map s t : perm_eq s t -> perm_eq (map f s) (map f t).
 Proof. by move/permP=> Est; apply/permP=> a; rewrite !count_map Est. Qed.
 
